@@ -1,0 +1,41 @@
+---
+# tasks file for revenni.restic
+
+- name: install | install bunzip
+  apt:
+    name: bzip2
+    update_cache: yes
+    cache_valid_time: 0
+
+- name: install | binary check
+  stat:
+    path: "{{ restic_bin }}"
+  register: bin
+
+- name: install | create bin directory
+  file:
+    path: "{{ restic_path }}/bin"
+    state: directory
+    mode: 0700
+    owner: root
+    group: root
+
+- name: install | downloading restic 
+  get_url:
+    url: https://github.com/restic/restic/releases/download/v0.9.6/restic_0.9.6_linux_amd64.bz2
+    dest: "{{ restic_path }}/bin"
+    mode: 0750
+    owner: root
+    group: root
+  register: downloaded
+  when: not bin.stat.exists and not ansible_check_mode
+
+- name: install | unpacking restic binary
+  command: /bin/bunzip2 -f "{{ downloaded.dest }}"
+  register: unpacked
+  when: downloaded.changed and not ansible_check_mode
+
+- name: install | renaming restic binary
+  command: mv -v "{{ downloaded.dest | replace('.bz2','') }}" "{{ restic_bin }}"
+  register: move
+  when: unpacked.changed

@@ -1,0 +1,16 @@
+---
+# tasks file for revenni.restic
+
+- name: initialize | init check
+  stat:
+    path: "{{ restic_path }}/.initialized"
+  register: initialized
+
+- name: initialize | restic repo init
+  command: "{{ restic_path }}/init.sh"
+  register: init_res
+  when: not initialized.stat.exists
+
+- name: initialize | restic init result
+  debug:
+    var: init_res

@@ -1,0 +1,7 @@
+# Restic cron 
+# {{ ansible_managed }}
+
+MAILTO={{ restic_cron_email }}
+LOG={{ restic_log_file }}
+
+{{ restic_cron_schedule }} root {{ restic_path }}/restic-run 2>&1 | /usr/bin/tee -a $LOG

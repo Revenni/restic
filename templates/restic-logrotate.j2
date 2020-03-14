@@ -1,0 +1,9 @@
+{{ restic_log_file }} {
+  weekly
+  rotate 4
+  delaycompress
+  compress
+  notifempty
+  missingok
+  create 0644 root root
+}

@@ -1,0 +1,51 @@
+---
+# tasks file for revenni.restic
+
+- name: configure | environment file
+  template:
+    src: restic-env.j2
+    dest: "{{ restic_path }}/.restic-env"
+    mode: 0600
+    owner: root
+    group: root
+
+- name: configure | key file
+  copy:
+    dest: "{{ restic_path }}/.restic-key"
+    content: "{{ vault_restic_encryption_key }}"
+    force: yes
+    mode: 0600
+    owner: root
+    group: root
+
+- name: configure | backup script
+  template:
+    src: restic-run.j2
+    dest: "{{ restic_path }}/restic-run"
+    mode: 0700
+    owner: root
+    group: root
+
+- name: configure | init script
+  template:
+    src: restic-init.j2
+    dest: "{{ restic_path }}/init.sh"
+    mode: 0700
+    owner: root
+    group: root
+
+- name: configure | cron.d 
+  template:
+    src: restic-cron.j2
+    dest: "/etc/cron.d/restic"
+    mode: 0600
+    owner: root
+    group: root
+
+- name: configure | logrotate.d 
+  template:
+    src: restic-logrotate.j2
+    dest: "/etc/logrotate.d/restic"
+    mode: 0600
+    owner: root
+    group: root

@@ -1,0 +1,20 @@
+---
+# defaults file for revenni.restic
+
+restic_path: /opt/restic
+restic_log_file: /var/log/restic.log
+restic_retention: 30d
+
+# example restic_repository
+#restic_repository: "b2:Revenni-Bucket:{{ ansible_fqdn }}"
+
+# cron settings
+restic_cron_email: your@email.com
+
+# cron time/date fields
+# min hour day-of-month month day-of-week
+# man 5 crontab for more information
+restic_cron_schedule: 0 */12 * * *
+
+# no need to change these
+restic_bin: "{{ restic_path }}/bin/restic"

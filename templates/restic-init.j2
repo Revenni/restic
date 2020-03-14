@@ -1,0 +1,15 @@
+#!/bin/bash
+# {{ ansible_managed }}
+# Initialize restic repository.  You should never have to run this manually.
+# If you switch repository buckets, delete .initialized and rerun full playbook.
+
+LOCK="{{ restic_path }}/.initialized"
+
+# set environment variables for restic run
+source {{ restic_path }}/.restic-env
+
+[ -e $LOCK ] || {{ restic_bin }} init
+
+if [ $? == 0 ]; then
+  touch $LOCK
+fi

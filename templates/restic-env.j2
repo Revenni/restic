@@ -1,0 +1,5 @@
+# {{ ansible_managed }}
+export B2_ACCOUNT_ID="{{ vault_restic_account_id }}"
+export B2_ACCOUNT_KEY="{{ vault_restic_account_key }}"
+export RESTIC_REPOSITORY="{{ restic_repository }}"
+export RESTIC_PASSWORD_FILE="{{ restic_path }}/.restic-key"

@@ -1,0 +1,20 @@
+#!/bin/bash
+# Restic backup script
+
+# set environment variables for restic run
+source {{ restic_path }}/.restic-env
+
+# backup root filesystem
+{{ restic_bin }} backup --verbose --one-file-system /
+
+{% if restic_additional_mounts is defined %}
+# backup any additional mounts if specified
+for i in {{ restic_additional_mounts }}
+  do
+    echo Backing up $i
+    {{ restic_bin }} backup --verbose --one-file-system $i
+done
+{% endif %}
+
+# prune snapshots older than retention period
+{{ restic_bin }} forget --verbose --keep-within {{ restic_retention }} --prune

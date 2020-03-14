@@ -1,0 +1,6 @@
+---
+# tasks file for revenni.restic
+
+- include: install.yml
+- include: configure.yml
+- include: initialize.yml
