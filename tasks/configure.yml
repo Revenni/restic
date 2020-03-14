@@ -34,7 +34,7 @@
     owner: root
     group: root
 
-- name: configure | cron.d 
+- name: configure | cron.d
   template:
     src: restic-cron.j2
     dest: "/etc/cron.d/restic"
@@ -42,7 +42,7 @@
     owner: root
     group: root
 
-- name: configure | logrotate.d 
+- name: configure | logrotate.d
   template:
     src: restic-logrotate.j2
     dest: "/etc/logrotate.d/restic"

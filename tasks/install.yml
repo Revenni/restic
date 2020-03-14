@@ -20,7 +20,7 @@
     owner: root
     group: root
 
-- name: install | downloading restic 
+- name: install | downloading restic
   get_url:
     url: https://github.com/restic/restic/releases/download/v0.9.6/restic_0.9.6_linux_amd64.bz2
     dest: "{{ restic_path }}/bin"
